@@ -1,0 +1,92 @@
+(* SBARGOLD EBNF Grammar *)
+
+program = { statement } ;
+
+statement = 
+    comment
+  | print_stmt
+  | input_stmt
+  | assign_stmt
+  | if_stmt
+  | loop_stmt
+  | func_def_stmt
+  | return_stmt
+  | func_call_stmt
+  | array_decl_stmt
+  | dict_decl_stmt
+  | file_write_stmt
+  | import_stmt
+  ;
+
+comment = "SBARGOLD#" , { all_characters - newline } , newline ;
+
+print_stmt = "SBARGOLD!" , expression ;
+
+input_stmt = variable , "SBARGOLD?" , [ string_literal ] ;
+
+assign_stmt = variable , "SBARGOLD=" , expression ;
+
+if_stmt = "SBARGOLD@" , expression , block ;
+
+loop_stmt = "SBARGOLD~" , ( count_loop | foreach_loop ) , block ;
+count_loop = expression ;
+foreach_loop = variable , "in" , expression ;
+
+block = "SBARGOLD{" , { statement } , "SBARGOLD}" ;
+
+func_def_stmt = "SBARGOLD>" , function_name , { parameter } , block ;
+parameter = identifier ;
+
+return_stmt = "SBARGOLD<" , expression ;
+
+func_call_stmt = "SBARGOLD$" , function_name , { expression } ;
+
+array_decl_stmt = variable , "SBARGOLD[]" , { expression } ;
+
+dict_decl_stmt = variable , "SBARGOLD[:]" , { expression , expression } ;
+
+file_write_stmt = "SBARGOLD>>" , expression , expression ; (* path, content *)
+
+import_stmt = "SBARGOLD|" , expression ; (* path *)
+
+expression = 
+    term 
+  | binary_op 
+  | string_concat 
+  | string_op 
+  | file_read 
+  | prop_access 
+  ;
+
+term = 
+    number 
+  | string_literal 
+  | variable 
+  | func_call_expr 
+  ;
+
+binary_op = term , operator , term ;
+operator = "+" | "-" | "*" | "/" | "==" | "!=" | "<" | ">" | "<=" | ">=" ;
+
+string_concat = variable , "SBARGOLD&" , expression , expression ; (* Assignment style *)
+(* Note: In parser implementation, concat is an expression, but syntax is usually part of assignment or standalone? *)
+(* Actually, syntax is: result SBARGOLD& str1 str2. This is an assignment statement variant in my parser. *)
+(* But for EBNF, let's represent the structure. *)
+
+string_op = variable , "SBARGOLD^" , string_literal , expression , { expression } ;
+
+file_read = variable , "SBARGOLD<<" , expression ;
+
+prop_access = variable , "SBARGOLD." , expression , expression ;
+
+variable = identifier ;
+function_name = identifier ;
+identifier = letter , { letter | digit | "_" } ;
+
+string_literal = '"' , { all_characters - '"' } , '"' ;
+number = integer | float ;
+integer = [ "-" ] , digit , { digit } ;
+float = integer , "." , digit , { digit } ;
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+letter = "A" | ... | "Z" | "a" | ... | "z" ;
+newline = "\n" ;

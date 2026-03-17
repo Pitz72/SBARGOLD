@@ -1,0 +1,22 @@
+SBARGOLD# Esempio di condizionale in Sbargold
+
+x SBARGOLD= 15
+y SBARGOLD= 10
+
+SBARGOLD! "x = 15"
+SBARGOLD! "y = 10"
+SBARGOLD! ""
+
+SBARGOLD! "Controllo se x > y..."
+SBARGOLD@ x > y
+SBARGOLD{
+SBARGOLD! "x è maggiore di y!"
+SBARGOLD}
+
+SBARGOLD! ""
+
+SBARGOLD! "Controllo se x == 15..."
+SBARGOLD@ x == 15
+SBARGOLD{
+SBARGOLD! "x è uguale a 15!"
+SBARGOLD}

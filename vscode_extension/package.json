@@ -1,0 +1,25 @@
+{
+  "name": "sbargold",
+  "displayName": "Sbargold Language Support",
+  "description": "Language support for Sbargold - The Golden Esoteric Language",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "sbargold",
+      "aliases": ["Sbargold", "sbargold"],
+      "extensions": [".sbg"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "sbargold",
+      "scopeName": "source.sbargold",
+      "path": "./syntaxes/sbargold.tmLanguage.json"
+    }]
+  }
+}

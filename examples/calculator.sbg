@@ -1,0 +1,28 @@
+SBARGOLD# Calcolatrice semplice in Sbargold
+
+SBARGOLD! "=== Calcolatrice Sbargold ==="
+
+SBARGOLD# Assegnazione di variabili
+a SBARGOLD= 10
+b SBARGOLD= 5
+
+SBARGOLD! "a = 10"
+SBARGOLD! "b = 5"
+SBARGOLD! ""
+
+SBARGOLD# Operazioni aritmetiche
+somma SBARGOLD+ a b
+SBARGOLD! "Somma: "
+SBARGOLD! somma
+
+differenza SBARGOLD- a b
+SBARGOLD! "Differenza: "
+SBARGOLD! differenza
+
+prodotto SBARGOLD* a b
+SBARGOLD! "Prodotto: "
+SBARGOLD! prodotto
+
+quoziente SBARGOLD/ a b
+SBARGOLD! "Quoziente: "
+SBARGOLD! quoziente

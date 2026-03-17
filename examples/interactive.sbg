@@ -1,0 +1,49 @@
+SBARGOLD# Esempio Interattivo - Sbargold
+SBARGOLD# Questo programma interagisce con l'utente
+
+SBARGOLD! "╔════════════════════════════════════════╗"
+SBARGOLD! "║     CALCOLATRICE INTERATTIVA SBARGOLD  ║"
+SBARGOLD! "╚════════════════════════════════════════╝"
+SBARGOLD! ""
+
+SBARGOLD! "Inserisci due numeri per calcolare somma, differenza,"
+SBARGOLD! "prodotto e quoziente."
+SBARGOLD! ""
+
+SBARGOLD# Richiedi il primo numero
+num1 SBARGOLD? "Primo numero: "
+SBARGOLD! ""
+
+SBARGOLD# Richiedi il secondo numero
+num2 SBARGOLD? "Secondo numero: "
+SBARGOLD! ""
+
+SBARGOLD# Calcola tutte le operazioni
+somma SBARGOLD+ num1 num2
+differenza SBARGOLD- num1 num2
+prodotto SBARGOLD* num1 num2
+quoziente SBARGOLD/ num1 num2
+
+SBARGOLD! "════════════════════════════════════════"
+SBARGOLD! "RISULTATI:"
+SBARGOLD! "════════════════════════════════════════"
+SBARGOLD! ""
+
+SBARGOLD! "Somma:"
+SBARGOLD! somma
+SBARGOLD! ""
+
+SBARGOLD! "Differenza:"
+SBARGOLD! differenza
+SBARGOLD! ""
+
+SBARGOLD! "Prodotto:"
+SBARGOLD! prodotto
+SBARGOLD! ""
+
+SBARGOLD! "Quoziente:"
+SBARGOLD! quoziente
+SBARGOLD! ""
+
+SBARGOLD! "════════════════════════════════════════"
+SBARGOLD! "Grazie per aver usato la calcolatrice!"

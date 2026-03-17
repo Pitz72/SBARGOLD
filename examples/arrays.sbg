@@ -1,0 +1,28 @@
+SBARGOLD# Esempio di array in Sbargold
+
+SBARGOLD! "=== Gestione Array in Sbargold ==="
+SBARGOLD! ""
+
+SBARGOLD# Creazione di un array
+numeri SBARGOLD[] 10 20 30 40 50
+
+SBARGOLD! "Array creato: [10, 20, 30, 40, 50]"
+SBARGOLD! ""
+
+SBARGOLD! "Iterazione sugli elementi:"
+SBARGOLD~ item in numeri
+SBARGOLD{
+SBARGOLD! item
+SBARGOLD}
+
+SBARGOLD! ""
+SBARGOLD! "Calcolo della somma:"
+somma SBARGOLD= 0
+
+SBARGOLD~ num in numeri
+SBARGOLD{
+somma SBARGOLD+ somma num
+SBARGOLD}
+
+SBARGOLD! "Somma totale: "
+SBARGOLD! somma

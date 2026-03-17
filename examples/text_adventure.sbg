@@ -1,0 +1,142 @@
+SBARGOLD# =====================================
+SBARGOLD# Gioco Testuale: La Chiave Perduta
+SBARGOLD# =====================================
+
+SBARGOLD# --- Definizioni delle Funzioni (Stanze) ---
+
+SBARGOLD# Funzione per la stanza iniziale: Salotto
+SBARGOLD> mostra_salotto
+SBARGOLD{
+    SBARGOLD! "Ti trovi nel salotto."
+    SBARGOLD! "C'è un tavolo con sopra una nota."
+    SBARGOLD! "Vedi una porta che conduce alla cucina e la porta d'ingresso, che è chiusa a chiave."
+    SBARGOLD! ""
+SBARGOLD}
+
+SBARGOLD# Funzione per la cucina
+SBARGOLD> mostra_cucina
+SBARGOLD{
+    SBARGOLD! "Sei in cucina."
+    SBARGOLD! "C'è un vecchio armadio di legno."
+    SBARGOLD! "Da qui puoi tornare in salotto."
+    SBARGOLD! ""
+SBARGOLD}
+
+SBARGOLD# --- Inizializzazione del Gioco ---
+
+SBARGOLD# Variabili di stato del gioco
+posizione SBARGOLD= "salotto"
+ha_chiave SBARGOLD= 0
+gioco_finito SBARGOLD= 0
+
+SBARGOLD! "======================================"
+SBARGOLD! "        LA CHIAVE PERDUTA             "
+SBARGOLD! "======================================"
+SBARGOLD! "Sei intrappolato in una casa. Trova la chiave per fuggire."
+SBARGOLD! "(Comandi: guarda, vai [destinazione], leggi [oggetto], apri [oggetto], prendi [oggetto], usa [oggetto], esci)"
+SBARGOLD! ""
+
+
+SBARGOLD# --- Loop Principale del Gioco ---
+
+SBARGOLD~ 100 # Un loop con 100 turni massimi per evitare loop infiniti
+SBARGOLD{
+    SBARGOLD@ gioco_finito == 1
+    SBARGOLD{
+        SBARGOLD< 0 # Esce dal loop se il gioco è finito
+    SBARGOLD}
+
+    SBARGOLD! "--------------------------------------"
+    comando SBARGOLD? "Cosa fai? > "
+
+    SBARGOLD# --- Logica di Gioco --- 
+
+    SBARGOLD# Comando: esci
+    SBARGOLD@ comando == "esci"
+    SBARGOLD{
+        SBARGOLD! "Arrivederci!"
+        gioco_finito SBARGOLD= 1
+    SBARGOLD}
+
+    SBARGOLD# Comando: guarda
+    SBARGOLD@ comando == "guarda"
+    SBARGOLD{
+        SBARGOLD@ posizione == "salotto"
+        SBARGOLD{
+            SBARGOLD$ mostra_salotto
+        SBARGOLD}
+        SBARGOLD@ posizione == "cucina"
+        SBARGOLD{
+            SBARGOLD$ mostra_cucina
+        SBARGOLD}
+    SBARGOLD}
+
+    SBARGOLD# Comando: vai cucina
+    SBARGOLD@ comando == "vai cucina"
+    SBARGOLD{
+        SBARGOLD@ posizione == "salotto"
+        SBARGOLD{
+            posizione SBARGOLD= "cucina"
+            SBARGOLD$ mostra_cucina
+        SBARGOLD}
+    SBARGOLD}
+
+    SBARGOLD# Comando: vai salotto
+    SBARGOLD@ comando == "vai salotto"
+    SBARGOLD{
+        SBARGOLD@ posizione == "cucina"
+        SBARGOLD{
+            posizione SBARGOLD= "salotto"
+            SBARGOLD$ mostra_salotto
+        SBARGOLD}
+    SBARGOLD}
+
+    SBARGOLD# Comando: leggi nota
+    SBARGOLD@ comando == "leggi nota"
+    SBARGOLD{
+        SBARGOLD@ posizione == "salotto"
+        SBARGOLD{
+            SBARGOLD! "La nota dice: 'La chiave di tutto è dove si prepara il cibo.'"
+        SBARGOLD}
+    SBARGOLD}
+
+    SBARGOLD# Comando: apri armadio
+    SBARGOLD@ comando == "apri armadio"
+    SBARGOLD{
+        SBARGOLD@ posizione == "cucina"
+        SBARGOLD{
+            SBARGOLD! "Apri l'armadio e dentro, su uno scaffale impolverato, trovi una piccola chiave arrugginita."
+        SBARGOLD}
+    SBARGOLD}
+
+    SBARGOLD# Comando: prendi chiave
+    SBARGOLD@ comando == "prendi chiave"
+    SBARGOLD{
+        SBARGOLD@ posizione == "cucina"
+        SBARGOLD{
+            SBARGOLD! "Hai preso la chiave."
+            ha_chiave SBARGOLD= 1
+        SBARGOLD}
+    SBARGOLD}
+
+    SBARGOLD# Comando: usa chiave
+    SBARGOLD@ comando == "usa chiave"
+    SBARGOLD{
+        SBARGOLD@ posizione == "salotto"
+        SBARGOLD{
+            SBARGOLD@ ha_chiave == 1
+            SBARGOLD{
+                SBARGOLD! "Usi la chiave sulla porta d'ingresso. La serratura scatta!"
+                SBARGOLD! "Sei libero! Hai vinto!"
+                gioco_finito SBARGOLD= 1
+            SBARGOLD}
+            SBARGOLD@ ha_chiave == 0
+            SBARGOLD{
+                SBARGOLD! "Non hai nessuna chiave da usare."
+            SBARGOLD}
+        SBARGOLD}
+    SBARGOLD}
+
+SBARGOLD}
+
+SBARGOLD! "Fine del gioco."

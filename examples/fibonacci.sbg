@@ -1,0 +1,19 @@
+SBARGOLD# Sequenza di Fibonacci in Sbargold
+
+SBARGOLD! "=== Sequenza di Fibonacci ==="
+SBARGOLD! "Primi 10 numeri:"
+SBARGOLD! ""
+
+a SBARGOLD= 0
+b SBARGOLD= 1
+
+SBARGOLD! a
+SBARGOLD! b
+
+SBARGOLD~ 8
+SBARGOLD{
+temp SBARGOLD+ a b
+SBARGOLD! temp
+a SBARGOLD= b
+b SBARGOLD= temp
+SBARGOLD}

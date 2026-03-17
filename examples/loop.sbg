@@ -1,0 +1,15 @@
+SBARGOLD# Esempio di loop in Sbargold
+
+SBARGOLD! "Conto da 1 a 5:"
+SBARGOLD! ""
+
+counter SBARGOLD= 0
+
+SBARGOLD~ 5
+SBARGOLD{
+counter SBARGOLD+ counter 1
+SBARGOLD! counter
+SBARGOLD}
+
+SBARGOLD! ""
+SBARGOLD! "Loop completato!"

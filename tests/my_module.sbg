@@ -1,0 +1,10 @@
+SBARGOLD# This is a module
+SBARGOLD! "Module Loaded!"
+
+SBARGOLD> greet name SBARGOLD{
+    msg SBARGOLD= "Hello from Module, "
+    full_msg SBARGOLD& msg name
+    SBARGOLD! full_msg
+SBARGOLD}
+
+module_var SBARGOLD= 42

@@ -1,0 +1,188 @@
+SBARGOLD# ========================================
+SBARGOLD# TEST COMPLETO DI TUTTE LE FUNZIONALITÀ
+SBARGOLD# ========================================
+
+SBARGOLD! "╔════════════════════════════════════════╗"
+SBARGOLD! "║   TEST SUITE LINGUAGGIO SBARGOLD       ║"
+SBARGOLD! "╚════════════════════════════════════════╝"
+SBARGOLD! ""
+
+SBARGOLD# ========================================
+SBARGOLD# TEST 1: Output Base
+SBARGOLD# ========================================
+SBARGOLD! "TEST 1: Output Base"
+SBARGOLD! "Hello, Sbargold!"
+SBARGOLD! 42
+SBARGOLD! ""
+
+SBARGOLD# ========================================
+SBARGOLD# TEST 2: Assegnazione Variabili
+SBARGOLD# ========================================
+SBARGOLD! "TEST 2: Assegnazione Variabili"
+x SBARGOLD= 10
+y SBARGOLD= 20
+nome SBARGOLD= "Sbargold"
+SBARGOLD! "x = 10, y = 20, nome = Sbargold"
+SBARGOLD! x
+SBARGOLD! y
+SBARGOLD! nome
+SBARGOLD! ""
+
+SBARGOLD# ========================================
+SBARGOLD# TEST 3: Operazioni Aritmetiche
+SBARGOLD# ========================================
+SBARGOLD! "TEST 3: Operazioni Aritmetiche"
+a SBARGOLD= 15
+b SBARGOLD= 3
+
+somma SBARGOLD+ a b
+SBARGOLD! "15 + 3 ="
+SBARGOLD! somma
+
+diff SBARGOLD- a b
+SBARGOLD! "15 - 3 ="
+SBARGOLD! diff
+
+prod SBARGOLD* a b
+SBARGOLD! "15 * 3 ="
+SBARGOLD! prod
+
+quot SBARGOLD/ a b
+SBARGOLD! "15 / 3 ="
+SBARGOLD! quot
+SBARGOLD! ""
+
+SBARGOLD# ========================================
+SBARGOLD# TEST 4: Condizionali
+SBARGOLD# ========================================
+SBARGOLD! "TEST 4: Condizionali"
+num1 SBARGOLD= 10
+num2 SBARGOLD= 5
+
+SBARGOLD! "num1 = 10, num2 = 5"
+
+SBARGOLD@ num1 > num2
+SBARGOLD{
+SBARGOLD! "✓ num1 > num2 è VERO"
+SBARGOLD}
+
+SBARGOLD@ num1 == 10
+SBARGOLD{
+SBARGOLD! "✓ num1 == 10 è VERO"
+SBARGOLD}
+
+SBARGOLD@ num2 < num1
+SBARGOLD{
+SBARGOLD! "✓ num2 < num1 è VERO"
+SBARGOLD}
+SBARGOLD! ""
+
+SBARGOLD# ========================================
+SBARGOLD# TEST 5: Loop Contatore
+SBARGOLD# ========================================
+SBARGOLD! "TEST 5: Loop con Contatore"
+SBARGOLD! "Conta da 1 a 5:"
+counter SBARGOLD= 0
+
+SBARGOLD~ 5
+SBARGOLD{
+counter SBARGOLD+ counter 1
+SBARGOLD! counter
+SBARGOLD}
+SBARGOLD! ""
+
+SBARGOLD# ========================================
+SBARGOLD# TEST 6: Array
+SBARGOLD# ========================================
+SBARGOLD! "TEST 6: Array e Iterazione"
+numeri SBARGOLD[] 100 200 300 400 500
+
+SBARGOLD! "Array: [100, 200, 300, 400, 500]"
+SBARGOLD! "Elementi:"
+
+SBARGOLD~ n in numeri
+SBARGOLD{
+SBARGOLD! n
+SBARGOLD}
+SBARGOLD! ""
+
+SBARGOLD# ========================================
+SBARGOLD# TEST 7: Fibonacci (Esempio Complesso)
+SBARGOLD# ========================================
+SBARGOLD! "TEST 7: Fibonacci - Primi 8 numeri"
+fib_a SBARGOLD= 0
+fib_b SBARGOLD= 1
+
+SBARGOLD! fib_a
+SBARGOLD! fib_b
+
+SBARGOLD~ 6
+SBARGOLD{
+fib_temp SBARGOLD+ fib_a fib_b
+SBARGOLD! fib_temp
+fib_a SBARGOLD= fib_b
+fib_b SBARGOLD= fib_temp
+SBARGOLD}
+SBARGOLD! ""
+
+SBARGOLD# ========================================
+SBARGOLD# TEST 8: Calcolo Somma Array
+SBARGOLD# ========================================
+SBARGOLD! "TEST 8: Somma Elementi Array"
+valori SBARGOLD[] 10 20 30 40 50
+somma_array SBARGOLD= 0
+
+SBARGOLD~ val in valori
+SBARGOLD{
+somma_array SBARGOLD+ somma_array val
+SBARGOLD}
+
+SBARGOLD! "Somma di [10, 20, 30, 40, 50]:"
+SBARGOLD! somma_array
+SBARGOLD! ""
+
+SBARGOLD# ========================================
+SBARGOLD# TEST 9: Fattoriale
+SBARGOLD# ========================================
+SBARGOLD! "TEST 9: Fattoriale di 5"
+fact_n SBARGOLD= 5
+fact_result SBARGOLD= 1
+fact_i SBARGOLD= 1
+
+SBARGOLD~ 5
+SBARGOLD{
+fact_result SBARGOLD* fact_result fact_i
+fact_i SBARGOLD+ fact_i 1
+SBARGOLD}
+
+SBARGOLD! "5! ="
+SBARGOLD! fact_result
+SBARGOLD! ""
+
+SBARGOLD# ========================================
+SBARGOLD# TEST 10: Operazioni Complesse
+SBARGOLD# ========================================
+SBARGOLD! "TEST 10: Operazioni Combinate"
+base SBARGOLD= 2
+esponente SBARGOLD= 5
+potenza SBARGOLD= 1
+exp_counter SBARGOLD= 0
+
+SBARGOLD! "Calcolo di 2^5:"
+
+SBARGOLD~ 5
+SBARGOLD{
+potenza SBARGOLD* potenza base
+exp_counter SBARGOLD+ exp_counter 1
+SBARGOLD}
+
+SBARGOLD! "Risultato: "
+SBARGOLD! potenza
+SBARGOLD! ""
+
+SBARGOLD# ========================================
+SBARGOLD# FINE TEST
+SBARGOLD# ========================================
+SBARGOLD! "╔════════════════════════════════════════╗"
+SBARGOLD! "║   TUTTI I TEST COMPLETATI CON SUCCESSO ║"
+SBARGOLD! "╚════════════════════════════════════════╝"

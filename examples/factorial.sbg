@@ -1,0 +1,17 @@
+SBARGOLD# Calcolo del fattoriale in Sbargold
+
+n SBARGOLD= 5
+risultato SBARGOLD= 1
+i SBARGOLD= 1
+
+SBARGOLD! "Calcolo del fattoriale di 5"
+SBARGOLD! ""
+
+SBARGOLD~ 5
+SBARGOLD{
+risultato SBARGOLD* risultato i
+i SBARGOLD+ i 1
+SBARGOLD}
+
+SBARGOLD! "5! = "
+SBARGOLD! risultato

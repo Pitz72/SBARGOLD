@@ -1,0 +1,31 @@
+{
+    "comments": {
+        "lineComment": "SBARGOLD#"
+    },
+    "brackets": [
+        [
+            "SBARGOLD{",
+            "SBARGOLD}"
+        ]
+    ],
+    "autoClosingPairs": [
+        {
+            "open": "SBARGOLD{",
+            "close": "SBARGOLD}"
+        },
+        {
+            "open": "\"",
+            "close": "\""
+        }
+    ],
+    "surroundingPairs": [
+        {
+            "open": "SBARGOLD{",
+            "close": "SBARGOLD}"
+        },
+        {
+            "open": "\"",
+            "close": "\""
+        }
+    ]
+}

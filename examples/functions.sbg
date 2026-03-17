@@ -1,0 +1,51 @@
+SBARGOLD# =====================================
+SBARGOLD# Esempio di Funzioni in Sbargold
+SBARGOLD# =====================================
+
+SBARGOLD# Definizione di una funzione semplice senza parametri
+SBARGOLD> saluta
+SBARGOLD{
+    SBARGOLD! "Ciao dalla funzione 'saluta'!"
+SBARGOLD}
+
+SBARGOLD# Definizione di una funzione con parametri e valore di ritorno
+SBARGOLD> moltiplica a b
+SBARGOLD{
+    SBARGOLD# Le variabili a e b sono locali a questa funzione
+    risultato SBARGOLD* a b
+    SBARGOLD< risultato
+SBARGOLD}
+
+SBARGOLD# --- Inizio del programma principale ---
+
+SBARGOLD! "--- Chiamata a funzione semplice ---"
+SBARGOLD$ saluta
+
+SBARGOLD! ""
+SBARGOLD! "--- Chiamata a funzione con ritorno ---"
+
+SBARGOLD# Chiamo la funzione 'moltiplica' e salvo il risultato
+valore_ritornato SBARGOLD$ moltiplica 7 6
+
+SBARGOLD! "Il risultato della moltiplicazione è:"
+SBARGOLD! valore_ritornato
+
+SBARGOLD! ""
+SBARGOLD! "--- Test di scope ---"
+
+SBARGOLD# La variabile 'risultato' definita dentro 'moltiplica' non esiste qui
+SBARGOLD! "La variabile 'risultato' (locale alla funzione) qui vale:"
+SBARGOLD! risultato # Dovrebbe stampare 'None' o essere vuoto, non 42
+
+SBARGOLD# Definiamo una variabile globale con lo stesso nome
+risultato SBARGOLD= 100
+SBARGOLD! "La variabile globale 'risultato' ora vale:"
+SBARGOLD! risultato
+
+SBARGOLD! "Chiamo di nuovo la funzione per vedere se la variabile globale viene modificata..."
+altro_valore SBARGOLD$ moltiplica 8 8
+SBARGOLD! "Nuovo risultato:"
+SBARGOLD! altro_valore
+
+SBARGOLD! "La variabile globale 'risultato' vale ancora:"
+SBARGOLD! risultato # Dovrebbe stampare ancora 100
