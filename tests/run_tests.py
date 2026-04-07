@@ -18,10 +18,10 @@ def run_script(script_name):
     env['SBG_TEST_MODE'] = '1'
     result = subprocess.run([sys.executable, script_name], capture_output=True, text=True, env=env)
     if result.returncode == 0:
-        print(f"✅ {script_name} PASSED")
+        print(f"[OK] {script_name} PASSED")
         return True
     else:
-        print(f"❌ {script_name} FAILED")
+        print(f"[FAIL] {script_name} FAILED")
         print(result.stderr)
         print(result.stdout)
         return False
@@ -36,7 +36,12 @@ def main():
         "test_file_io.py",
         "test_data_structures.py",
         "test_modules.py",
-        "test_debugger.py"
+        "test_namespaces.py",
+        "test_safety.py",
+        "test_debugger.py",
+        "test_logic.py",
+        "test_control_flow.py",
+        "test_mutation.py"
     ]
     
     passed = 0
@@ -49,7 +54,7 @@ def main():
             if run_script(script_path):
                 passed += 1
         else:
-            print(f"⚠️ Script {script} not found")
+            print(f"[SKIP] Script {script} not found")
             
     print(f"\nSummary: {passed}/{total} tests passed.")
     

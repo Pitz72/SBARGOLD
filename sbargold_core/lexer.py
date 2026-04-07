@@ -56,6 +56,11 @@ class Lexer:
                 self._read_number()
                 continue
 
+            # Punto isolato per accesso proprietà (es. obj.prop)
+            if char == '.' and not (self.pos + 1 < len(self.code) and self.code[self.pos+1].isdigit()):
+                self.tokens.append(Token('OP_DOT', '.', self.line, self.column))
+                self.pos += 1; self.column += 1; continue
+
             # Identificatori (Variabili e Funzioni)
             if char.isalpha() or char == '_':
                 self._read_identifier()
@@ -64,7 +69,11 @@ class Lexer:
             # Operatori generici
             self._read_operator()
 
-        self.tokens.append(Token('EOF', '', self.line, self.column))
+        # FIX #15: Token EOF con posizione valida (inizio dell'ultima riga, non fuori range)
+        # Usa (1, 1) come posizione sicura per EOF, o la posizione corrente se valida
+        eof_line = max(1, self.line)
+        eof_col = max(1, self.column)
+        self.tokens.append(Token('EOF', '', eof_line, eof_col))
         return self.tokens
 
     def _peek_digit(self) -> bool:
@@ -93,7 +102,10 @@ class Lexer:
             '-': 'CMD_SUB',
             '*': 'CMD_MUL',
             '/': 'CMD_DIV',
+            '@?': 'CMD_ELSE_IF',
+            '@!': 'CMD_ELSE',
             '@': 'CMD_IF',
+            '~~': 'CMD_WHILE',
             '~': 'CMD_LOOP',
             '{': 'BLOCK_START',
             '}': 'BLOCK_END',
@@ -133,56 +145,81 @@ class Lexer:
         raise errors.SyntaxError(f"Malformed SBARGOLD command: '{malformed}'", self.line, start_col)
 
     def _read_string(self):
-        """Legge una stringa tra doppi apici."""
+        """Legge una stringa tra doppi apici.
+        
+        FIX #14: Ottimizzato con lista + join per evitare O(n²) string building.
+        """
         start_col = self.column
         self.pos += 1
         self.column += 1
-        value = ''
+        chars = []  # FIX #14: Usa lista per accumulare caratteri
         
         while self.pos < len(self.code) and self.code[self.pos] != '"':
-            value += self.code[self.pos]
+            chars.append(self.code[self.pos])  # FIX #14: O(1) append invece di O(n) concat
             self.pos += 1
             self.column += 1
             
         if self.pos < len(self.code):
             self.pos += 1
             self.column += 1
+            value = ''.join(chars)  # FIX #14: O(n) join una sola volta alla fine
             self.tokens.append(Token('STRING', value, self.line, start_col))
         else:
             from . import errors
             raise errors.SyntaxError("Unterminated string", self.line, start_col)
 
     def _read_number(self):
-        """Legge un numero intero o decimale."""
+        """Legge un numero intero o decimale.
+        
+        FIX #14: Ottimizzato con lista + join per evitare O(n²) string building.
+        """
         start_col = self.column
-        value_str = ''
+        chars = []
         
         if self.code[self.pos] == '-':
-            value_str += '-'
-            self.pos += 1
-            self.column += 1
+            chars.append('-')
+            self.pos += 1; self.column += 1
             
-        while self.pos < len(self.code) and (self.code[self.pos].isdigit() or self.code[self.pos] == '.'):
-            value_str += self.code[self.pos]
-            self.pos += 1
-            self.column += 1
+        while self.pos < len(self.code) and self.code[self.pos].isdigit():
+            chars.append(self.code[self.pos])
+            self.pos += 1; self.column += 1
             
+        # Consuma il punto decimale SOLO SE seguito da una cifra
+        if self.pos < len(self.code) and self.code[self.pos] == '.' and \
+           (self.pos + 1 < len(self.code) and self.code[self.pos+1].isdigit()):
+            chars.append('.')
+            self.pos += 1; self.column += 1
+            while self.pos < len(self.code) and self.code[self.pos].isdigit():
+                chars.append(self.code[self.pos])
+                self.pos += 1; self.column += 1
+            
+        value_str = ''.join(chars)
         if '.' in value_str:
             self.tokens.append(Token('FLOAT', value_str, self.line, start_col))
         else:
             self.tokens.append(Token('INTEGER', value_str, self.line, start_col))
 
     def _read_identifier(self):
-        """Legge un identificatore (variabile/funzione) o parola chiave."""
+        """Legge un identificatore (variabile/funzione) o parola chiave.
+        
+        FIX #14: Ottimizzato con lista + join per evitare O(n²) string building.
+        """
         start_col = self.column
-        value = ''
-        while self.pos < len(self.code) and (self.code[self.pos].isalnum() or self.code[self.pos] == '_'):
-            value += self.code[self.pos]
+        chars = []  # FIX #14: Usa lista per accumulare caratteri
+        while self.pos < len(self.code) and (self.code[self.pos].isalnum() or self.code[self.pos] == '_' or self.code[self.pos] == ':'):
+            chars.append(self.code[self.pos])  # FIX #14: O(1) append
             self.pos += 1
             self.column += 1
             
+        value = ''.join(chars)  # FIX #14: O(n) join una sola volta
         if value == 'in':
             self.tokens.append(Token('KEYWORD', 'in', self.line, start_col))
+        elif value == 'AND':
+            self.tokens.append(Token('OP_AND', 'AND', self.line, start_col))
+        elif value == 'OR':
+            self.tokens.append(Token('OP_OR', 'OR', self.line, start_col))
+        elif value == 'NOT':
+            self.tokens.append(Token('OP_NOT', 'NOT', self.line, start_col))
         else:
             self.tokens.append(Token('IDENTIFIER', value, self.line, start_col))
 
@@ -200,12 +237,24 @@ class Lexer:
                 self.tokens.append(Token(ttype, op, self.line, start_col))
                 self.pos += 2; self.column += 2; return
 
-        # Operatori a carattere singolo
-        single_ops = {'>': 'OP_GT', '<': 'OP_LT'}
+        # Operatori aritmetici infix (PEMDAS support)
+        # FIX #5: Aggiungi supporto per espressioni infix nel lexer
+        arithmetic_ops = {'+': 'OP_ADD', '-': 'OP_SUB', '*': 'OP_MUL', '/': 'OP_DIV'}
+        if char in arithmetic_ops:
+            self.tokens.append(Token(arithmetic_ops[char], char, self.line, start_col))
+            self.pos += 1; self.column += 1; return
+
+        # Operatori a carattere singolo (confronto, raggruppamento e accesso)
+        single_ops = {'>': 'OP_GT', '<': 'OP_LT', '(': 'LPAREN', ')': 'RPAREN', '.': 'OP_DOT'}
         if char in single_ops:
             self.tokens.append(Token(single_ops[char], char, self.line, start_col))
             self.pos += 1; self.column += 1; return
             
-        # Ignora caratteri sconosciuti
-        self.pos += 1
-        self.column += 1
+        # FIX #6: Errore per caratteri sconosciuti invece di ignorarli silenziosamente
+        # Questo previene errori di sintassi mascherati e comportamenti imprevedibili
+        from . import errors
+        raise errors.SyntaxError(
+            f"Unexpected character '{char}' (ASCII: {ord(char)}) at line {self.line}, column {start_col}. "
+            f"If this is a valid character, it may not be supported by SBARGOLD.",
+            self.line, start_col
+        )

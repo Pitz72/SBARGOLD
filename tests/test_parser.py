@@ -32,7 +32,7 @@ def test_parser():
     # Assertions
     assert len(program.statements) == 3
     assert str(program.statements[0]).startswith("Assign(x = Number(10))")
-    assert str(program.statements[1]).startswith("Print(String('Hello'))")
+    assert str(program.statements[1]).startswith("Print(exprs=1)")
     assert str(program.statements[2]).startswith("If(")
     
     print("\nParser Test PASSED!")

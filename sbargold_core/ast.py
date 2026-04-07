@@ -67,6 +67,16 @@ class BinOp(Expression):
     def __repr__(self):
         return f"BinOp({self.left} {self.op} {self.right})"
 
+class UnaryOp(Expression):
+    """Rappresenta un'operazione unaria (es. NOT logico)."""
+    def __init__(self, op: str, right: Expression, line: int = 0, col: int = 0):
+        super().__init__(line, col)
+        self.op = op
+        self.right = right
+    
+    def __repr__(self):
+        return f"UnaryOp({self.op} {self.right})"
+
 class FunctionCall(Expression):
     """Rappresenta l'invocazione di una funzione."""
     def __init__(self, name: str, args: List[Expression], line: int = 0, col: int = 0):
@@ -119,6 +129,15 @@ class PropAccess(Expression):
 
 # --- Statements ---
 
+class ArrayLiteral(Expression):
+    """Rappresenta un array letterale (SBARGOLD[] 1 2 3)."""
+    def __init__(self, elements: List[Expression], line: int = 0, col: int = 0):
+        super().__init__(line, col)
+        self.elements = elements
+    
+    def __repr__(self):
+        return f"ArrayLiteral(size={len(self.elements)})"
+
 class DictDeclStatement(Statement):
     """Definizione di un dizionario (SBARGOLD[:])."""
     def __init__(self, name: str, keys: List[Expression], values: List[Expression], line: int = 0, col: int = 0):
@@ -150,13 +169,13 @@ class FileWriteStatement(Statement):
         return f"FileWrite(to={self.path})"
 
 class PrintStatement(Statement):
-    """Stampa di un valore (SBARGOLD!)."""
-    def __init__(self, expression: Expression, line: int = 0, col: int = 0):
+    """Stampa di uno o più valori (SBARGOLD!)."""
+    def __init__(self, expressions: List[Expression], line: int = 0, col: int = 0):
         super().__init__(line, col)
-        self.expression = expression
+        self.expressions = expressions
     
     def __repr__(self):
-        return f"Print({self.expression})"
+        return f"Print(exprs={len(self.expressions)})"
 
 class InputStatement(Statement):
     """Richiesta input utente (SBARGOLD?)."""
@@ -169,24 +188,36 @@ class InputStatement(Statement):
         return f"Input({self.variable}, prompt='{self.prompt}')"
 
 class AssignStatement(Statement):
-    """Assegnazione di un valore a una variabile (SBARGOLD=)."""
-    def __init__(self, variable: str, expression: Expression, line: int = 0, col: int = 0):
+    """Assegnazione di un valore (SBARGOLD=). Il target può essere una variabile o una proprietà."""
+    def __init__(self, target: Expression, expression: Expression, line: int = 0, col: int = 0):
         super().__init__(line, col)
-        self.variable = variable
+        self.target = target
         self.expression = expression
     
     def __repr__(self):
-        return f"Assign({self.variable} = {self.expression})"
+        return f"Assign({self.target} = {self.expression})"
 
 class IfStatement(Statement):
-    """Struttura condizionale (SBARGOLD@)."""
+    """Struttura condizionale (SBARGOLD@). Supporta rami opzionali ELIF e ELSE."""
+    def __init__(self, condition: Expression, body: List[Statement], elif_branches: List[tuple] = None, else_body: List[Statement] = None, line: int = 0, col: int = 0):
+        super().__init__(line, col)
+        self.condition = condition
+        self.body = body
+        self.elif_branches = elif_branches if elif_branches else [] # List of (condition, body)
+        self.else_body = else_body
+    
+    def __repr__(self):
+        return f"If({self.condition}, branches={len(self.elif_branches)}, has_else={self.else_body is not None})"
+
+class WhileStatement(Statement):
+    """Struttura di iterazione condizionale (SBARGOLD~~)."""
     def __init__(self, condition: Expression, body: List[Statement], line: int = 0, col: int = 0):
         super().__init__(line, col)
         self.condition = condition
         self.body = body
     
     def __repr__(self):
-        return f"If({self.condition}, body={len(self.body)})"
+        return f"While({self.condition}, body={len(self.body)})"
 
 class LoopStatement(Statement):
     """Struttura di iterazione (SBARGOLD~)."""

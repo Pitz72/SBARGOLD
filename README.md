@@ -1,16 +1,24 @@
-# 🏆 SBARGOLD - Il Linguaggio Esoterico dell'Oro (v2.4.0)
+# 🏆 SBARGOLD - Il Linguaggio Esoterico dell'Oro (24K.LINGOTTO-6)
 
 **Sbargold** è un linguaggio di programmazione esoterico, fittizio ma completamente funzionante, basato sulla filosofia del "Monovocabolo": un singolo comando, **SBARGOLD**, declinato in varie modalità attraverso simboli per ottenere diverse funzionalità.
 
-## 📋 Caratteristiche (v2.4.0)
+## 📋 Caratteristiche (24K.LINGOTTO-6)
+
+> **Sistema di Versionamento**: SBARGOLD utilizza la scala di purezza dell'oro.
+> - **24K** (99.9%): Oro puro - Rilascio stabile e completo
+> - **22K** (91.7%): Feature-complete, testing finale
+> - **18K** (75%): Core solido, feature in consolidamento
+> - **14K** (58.3%): MVP funzionante
+> - **9K** (37.5%): Prototipo
 
 - ✨ **Un solo comando**: Tutto ruota attorno a SBARGOLD
-- 🎯 **Motore Moderno**: Basato su Lexer, Parser e AST (v2.4 con PEMDAS)
+- 🎯 **Motore Moderno**: Lexer, Parser AST con PEMDAS completo, **Logica Booleana** e **Raggruppamenti `()`**
 - 🚀 **Turing-completo**: Supporta variabili, array, loop, condizionali e funzioni
-- 🔐 **Closures**: Supporto nativo per lo scope lessicale e le chiusure (v2.3.0)
-- 🛡️ **Sicurezza**: Sandbox File System, Watchdog e Protezione Import Circolari (v2.4.0)
-- 📦 **Modulare**: Supporto per importazione moduli (`SBARGOLD|`)
-- 🗂️ **Strutture Dati**: Dizionari (`SBARGOLD[:]`) e Array (`SBARGOLD[]`)
+- 🔐 **Closures**: Supporto nativo per lo scope lessicale e le chiusure
+- 🛡️ **Sicurezza**: Sandbox, Watchdog, Path Traversal fix, Isolamento Moduli
+- 📦 **Modulare**: Supporto per importazione moduli con Namespace `:` (es. `math:pi`)
+- 🗂️ **Strutture Dati**: Dizionari (`SBARGOLD[:]`) e Array (`SBARGOLD[]`) nidificabili
+- ✍️ **Mutazione Avanzata**: Supporto per L-Values e dot-notation (es. `user.age SBARGOLD= 31`)
 - 📄 **File I/O**: Lettura e scrittura file (`SBARGOLD>>`, `SBARGOLD<<`)
 - 🔤 **String Ops**: Manipolazione avanzata stringhe (`SBARGOLD&`, `SBARGOLD^`)
 - 🛠️ **Dev Tools**: Debugger CLI integrato (`-d`) e Estensione VS Code
