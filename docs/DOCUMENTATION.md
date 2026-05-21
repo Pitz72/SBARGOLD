@@ -1,4 +1,4 @@
-# 📚 Documentazione SBARGOLD 24K.LINGOTTO-1
+# 📚 Documentazione SBARGOLD 24K.LINGOTTO-7
 
 > **Nota sul Versionamento**: SBARGOLD utilizza la Scala di Purezza dell'Oro:
 > - **24K** (99.9%): Oro puro - Rilascio stabile

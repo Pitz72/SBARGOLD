@@ -185,6 +185,38 @@ class Parser:
                          values.append(self._parse_expression())
                     return ast.DictDeclStatement(name, keys, values, cmd_token.line, cmd_token.column)
 
+                # String Concatenation assignment: result SBARGOLD& str1 str2
+                if self._match('CMD_STR_CONCAT'):
+                    cmd_token = self.tokens[self.pos-1]
+                    left = self._parse_expression()
+                    right = self._parse_expression()
+                    concat_expr = ast.StringConcat(left, right, cmd_token.line, cmd_token.column)
+                    return ast.AssignStatement(target_expr, concat_expr, cmd_token.line, cmd_token.column)
+
+                # String Operation assignment: result SBARGOLD^ "OP" target args
+                if self._match('CMD_STR_OP'):
+                    cmd_token = self.tokens[self.pos-1]
+                    op_name = self._parse_expression()
+                    target = self._parse_expression()
+                    args = self._parse_argument_list()
+                    op_expr = ast.StringOp(op_name, target, args, cmd_token.line, cmd_token.column)
+                    return ast.AssignStatement(target_expr, op_expr, cmd_token.line, cmd_token.column)
+
+                # File Read assignment: result SBARGOLD<< filename
+                if self._match('CMD_FILE_READ'):
+                    cmd_token = self.tokens[self.pos-1]
+                    path = self._parse_expression()
+                    read_expr = ast.FileRead(path, cmd_token.line, cmd_token.column)
+                    return ast.AssignStatement(target_expr, read_expr, cmd_token.line, cmd_token.column)
+
+                # Property Access assignment: result SBARGOLD. target key
+                if self._match('CMD_PROP_ACCESS'):
+                    cmd_token = self.tokens[self.pos-1]
+                    target = self._parse_expression()
+                    key = self._parse_expression()
+                    access_expr = ast.PropAccess(target, key, cmd_token.line, cmd_token.column)
+                    return ast.AssignStatement(target_expr, access_expr, cmd_token.line, cmd_token.column)
+
             # Se arriviamo qui, l'espressione non è seguita da un comando di assegnazione valido
             curr = self._peek()
             raise errors.SyntaxError(f"Unexpected expression '{target_expr}' followed by unexpected token {curr.type} ({curr.value})", curr.line, curr.column)

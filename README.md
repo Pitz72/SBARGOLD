@@ -1,8 +1,8 @@
-# 🏆 SBARGOLD - Il Linguaggio Esoterico dell'Oro (24K.LINGOTTO-6)
+# 🏆 SBARGOLD - Il Linguaggio Esoterico dell'Oro (24K.LINGOTTO-7)
 
 **Sbargold** è un linguaggio di programmazione esoterico, fittizio ma completamente funzionante, basato sulla filosofia del "Monovocabolo": un singolo comando, **SBARGOLD**, declinato in varie modalità attraverso simboli per ottenere diverse funzionalità.
 
-## 📋 Caratteristiche (24K.LINGOTTO-6)
+## 📋 Caratteristiche (24K.LINGOTTO-7)
 
 > **Sistema di Versionamento**: SBARGOLD utilizza la scala di purezza dell'oro.
 > - **24K** (99.9%): Oro puro - Rilascio stabile e completo

@@ -18,6 +18,17 @@ SBARGOLD utilizza un sistema di versionamento esoterico basato sulla scala di pu
 
 ---
 
+## 24K.LINGOTTO-7 (Oro Puro - Parser & Test Suite Hardening)
+*Data: 2026-05-21*
+*Precedente: 24K.LINGOTTO-6*
+
+### 🔧 Fix & Stabilità
+- **Parser Retrocompatibilità**: Aggiunto supporto nel Parser (`sbargold_core/parser.py`) per interpretare i comandi funzionali (`SBARGOLD&`, `SBARGOLD^`, `SBARGOLD<<` e `SBARGOLD.`) come istruzioni di assegnamento tradizionale a sinistra, permettendo l'esecuzione di script legacy senza causare `SyntaxError`.
+- **Suite di Test Hardening**: Corretto l'assertion error nel test del parser (`test_parser.py`) in cui il formato testuale atteso non rispecchiava la rappresentazione `Var(x)` dei nodi identificatori dell'AST.
+- **Tasso di Successo del 100%**: Ripristinato il tasso di successo del **100%** su tutti i 13 test del linguaggio.
+
+---
+
 ## 24K.LINGOTTO-6 (Step 1 - Espressività e Logica)
 *Data: In sviluppo*
 *Precedente: 24K.LINGOTTO-5*
